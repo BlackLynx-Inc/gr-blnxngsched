@@ -12,27 +12,40 @@
 include(GrPlatform) #define LIB_SUFFIX
 
 ###############################################################################
-#    CUDA Kernels to be compiled with NVCC
+# CUDA Kernels to be compiled with NVCC
 ###############################################################################
-message(status "C_FLAGS: " ${CMAKE_C_FLAGS})
-message(status "CXX_FLAGS: " ${CMAKE_CXX_FLAGS})
+find_package(CUDA)
 
-find_package(CUDA REQUIRED)
-add_library(gnuradio-blnxngsched-cu STATIC 
-    copy.cu
+set(CUDA_BLOCK_SOURCES )
+if (CUDA_FOUND)
+
+    set(CUDA_BLOCK_SOURCES
+        cuda_loopback_impl.cc)
+
+    add_library(gnuradio-blnxngsched-cu STATIC 
+        copy.cu
+        )
+    set_target_properties(gnuradio-blnxngsched-cu PROPERTIES 
+        POSITION_INDEPENDENT_CODE ON
+        CUDA_VISIBILITY_PRESET "hidden"
+        CUDA_SEPARABLE_COMPILATION ON
     )
-set_target_properties(gnuradio-blnxngsched-cu PROPERTIES 
-    POSITION_INDEPENDENT_CODE ON
-    CUDA_VISIBILITY_PRESET "hidden"
-    CUDA_SEPARABLE_COMPILATION ON
-)
-#~ target_compile_options(gnuradio-blnxngsched-cu PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-gencode arch=compute_75,code=sm_75>)
+    # Compile for supported archs; CMake workaround, see: https://stackoverflow.com/a/54505975/73878
+    target_compile_options(gnuradio-blnxngsched-cu PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-gencode arch=compute_60,code=sm_60>")
+    target_compile_options(gnuradio-blnxngsched-cu PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-gencode arch=compute_61,code=sm_61>")
+    target_compile_options(gnuradio-blnxngsched-cu PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-gencode arch=compute_62,code=sm_62>")
+    target_compile_options(gnuradio-blnxngsched-cu PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-gencode arch=compute_70,code=sm_70>")
+    target_compile_options(gnuradio-blnxngsched-cu PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-gencode arch=compute_72,code=sm_72>")
+    target_compile_options(gnuradio-blnxngsched-cu PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-gencode arch=compute_75,code=sm_75>")
+    target_compile_options(gnuradio-blnxngsched-cu PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-gencode arch=compute_80,code=sm_80>")
+    target_compile_options(gnuradio-blnxngsched-cu PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-gencode arch=compute_86,code=sm_86>")
+endif()
 
 
 
 list(APPEND blnxngsched_sources
     fake_hw_loopback_impl.cc
-    cuda_loopback_impl.cc
+    ${CUDA_BLOCK_SOURCES}
 )
 
 set(blnxngsched_sources "${blnxngsched_sources}" PARENT_SCOPE)
@@ -44,12 +57,14 @@ endif(NOT blnxngsched_sources)
 add_library(gnuradio-blnxngsched SHARED ${blnxngsched_sources})
 target_link_libraries(gnuradio-blnxngsched PUBLIC
     gnuradio::gnuradio-runtime
-    ${CUDA_CUDA_LIBRARY}
     ${CUDA_CUDART_LIBRARY}  
     )
+    
+if (CUDA_FOUND)
 target_link_libraries(gnuradio-blnxngsched PRIVATE 
     gnuradio-blnxngsched-cu
     )
+endif()
         
 target_include_directories(gnuradio-blnxngsched
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>

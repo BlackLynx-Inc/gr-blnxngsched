@@ -8,7 +8,7 @@
 #include "cuda_loopback_impl.h"
 #include <gnuradio/io_signature.h>
 
-extern void apply_copy(cuFloatComplex* in,
+extern void apply_copy(const cuFloatComplex* in,
                        cuFloatComplex* out,
                        int grid_size,
                        int block_size,
@@ -44,11 +44,8 @@ cuda_loopback_impl::cuda_loopback_impl(int batch_size, int load)
       d_min_grid_size(0),
       d_block_size(0)
 {
-    //~ get_block_and_grid(&d_min_grid_size, &d_block_size);
-    d_block_size = 1024;
+    get_block_and_grid(&d_min_grid_size, &d_block_size);
     cudaDeviceSynchronize();
-    std::cerr << "minGrid: " << d_min_grid_size << ", blockSize: " << d_block_size
-              << std::endl;
     
     set_output_multiple(d_batch_size);
     
@@ -75,8 +72,8 @@ int cuda_loopback_impl::general_work(int noutput_items,
                                      gr_vector_const_void_star& input_items,
                                      gr_vector_void_star& output_items)
 {
-    const input_type* in = reinterpret_cast<const input_type*>(input_items[0]);
-    output_type* out = reinterpret_cast<output_type*>(output_items[0]);
+    const cuFloatComplex* in = reinterpret_cast<const cuFloatComplex*>(input_items[0]);
+    cuFloatComplex* out = reinterpret_cast<cuFloatComplex*>(output_items[0]);
     
     cudaError_t rc = cudaSuccess;
     
@@ -84,8 +81,8 @@ int cuda_loopback_impl::general_work(int noutput_items,
     for (uint32_t iter_idx = 0; iter_idx < num_iters; ++iter_idx)
     {
 #if 1
-        apply_copy((cuFloatComplex*)(in + (iter_idx * d_batch_size)),
-                   (cuFloatComplex*)(out + (iter_idx * d_batch_size)),
+        apply_copy(in + (iter_idx * d_batch_size),
+                   out + (iter_idx * d_batch_size),
                    d_batch_size / d_block_size,
                    d_block_size,
                    d_load,

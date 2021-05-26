@@ -6,7 +6,7 @@
 
 
 __global__ void
-copy_kernel(cuFloatComplex* in, cuFloatComplex* out, int batch_size, int load = 1)
+copy_kernel(const cuFloatComplex* in, cuFloatComplex* out, int batch_size, int load = 1)
 {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
     int n = batch_size;
@@ -21,7 +21,7 @@ copy_kernel(cuFloatComplex* in, cuFloatComplex* out, int batch_size, int load = 
     }
 }
 
-void apply_copy(cuFloatComplex* in,
+void apply_copy(const cuFloatComplex* in,
                 cuFloatComplex* out,
                 int grid_size,
                 int block_size,
@@ -44,5 +44,10 @@ void apply_copy(cuFloatComplex* in,
 
 void get_block_and_grid(int* minGrid, int* minBlock)
 {
-    cudaOccupancyMaxPotentialBlockSize(minGrid, minBlock, copy_kernel, 0, 0);
+    cudaError_t rc = cudaOccupancyMaxPotentialBlockSize(minGrid, minBlock, copy_kernel, 0, 0);
+    if (rc != cudaSuccess)
+    {
+        fprintf(stderr, "ERROR: - \"%s\" (%d).\n", 
+                cudaGetErrorString(rc), int(rc));
+    }
 }
