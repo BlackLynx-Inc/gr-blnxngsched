@@ -44,6 +44,8 @@ endif()
 
 
 list(APPEND blnxngsched_sources
+    custom_buffer.cc
+    custom_buf_loopback_impl.cc
     fake_hw_loopback_impl.cc
     ${CUDA_BLOCK_SOURCES}
 )

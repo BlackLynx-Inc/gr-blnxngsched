@@ -30,7 +30,9 @@ include(GrPybind)
 
 list(APPEND blnxngsched_python_files
     fake_hw_loopback_python.cc
-    cuda_loopback_python.cc python_bindings.cc)
+    cuda_loopback_python.cc 
+    custom_buf_loopback_python.cc
+    python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(blnxngsched 
    ../..

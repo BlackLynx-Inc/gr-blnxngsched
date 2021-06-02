@@ -23,6 +23,7 @@ namespace py = pybind11;
 // BINDING_FUNCTION_PROTOTYPES(
     void bind_fake_hw_loopback(py::module& m);
     void bind_cuda_loopback(py::module& m);
+    void bind_custom_buf_loopback(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -53,5 +54,6 @@ PYBIND11_MODULE(blnxngsched_python, m)
     // BINDING_FUNCTION_CALLS(
     bind_fake_hw_loopback(m);
     bind_cuda_loopback(m);
+    bind_custom_buf_loopback(m);
     // ) END BINDING_FUNCTION_CALLS
 }
