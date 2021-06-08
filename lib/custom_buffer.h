@@ -38,7 +38,7 @@ public:
     /*!
      * \brief Do actual buffer allocation. Inherited from buffer_single_mapped.
      */
-    bool do_allocate_buffer(int final_nitems, size_t sizeof_item);
+    bool do_allocate_buffer(size_t final_nitems, size_t sizeof_item);
 
     /*!
      * \brief Return a pointer to the write buffer depending on the context
