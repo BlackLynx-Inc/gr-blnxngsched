@@ -11,6 +11,5 @@
 ########################################################################
 install(FILES
     api.h
-    fake_hw_loopback.h
     cuda_loopback.h DESTINATION include/blnxngsched
 )

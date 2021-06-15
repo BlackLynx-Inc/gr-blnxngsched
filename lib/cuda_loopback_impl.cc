@@ -45,6 +45,7 @@ cuda_loopback_impl::cuda_loopback_impl(int batch_size, int load)
       d_block_size(0)
 {
     get_block_and_grid(&d_min_grid_size, &d_block_size);
+    //~ std::cout << "Min grid: " << d_min_grid_size << " -- Block size: " << d_block_size << std::endl;
     cudaDeviceSynchronize();
     
     set_output_multiple(d_batch_size);

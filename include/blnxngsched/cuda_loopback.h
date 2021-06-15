@@ -8,7 +8,6 @@
 #ifndef INCLUDED_BLNXNGSCHED_CUDA_LOOPBACK_H
 #define INCLUDED_BLNXNGSCHED_CUDA_LOOPBACK_H
 
-#include <gnuradio/cuda_buffer.h>
 #include <gnuradio/block.h>
 #include <blnxngsched/api.h>
 

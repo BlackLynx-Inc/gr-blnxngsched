@@ -13,6 +13,7 @@
 
 #include <cuda.h>
 #include <cuda_runtime_api.h>
+#include <cuda_buffer/cuda_buffer.h>
 
 namespace gr {
 namespace blnxngsched {

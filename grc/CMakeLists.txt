@@ -7,6 +7,6 @@
 #
 
 install(FILES
-    blnxngsched_fake_hw_loopback.block.yml
-    blnxngsched_cuda_loopback.block.yml DESTINATION share/gnuradio/grc/blocks
+    blnxngsched_cuda_loopback.block.yml 
+    blnxngsched_custom_buf_loopback.block.yml DESTINATION share/gnuradio/grc/blocks
 )

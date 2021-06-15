@@ -41,12 +41,15 @@ if (CUDA_FOUND)
     target_compile_options(gnuradio-blnxngsched-cu PRIVATE "$<$<COMPILE_LANGUAGE:CUDA>:SHELL:-gencode arch=compute_86,code=sm_86>")
 endif()
 
+###############################################################################
+# gr-cuda_buffer is required for the CUDA blocks
+###############################################################################
+find_package(cuda_buffer REQUIRED)
 
 
 list(APPEND blnxngsched_sources
     custom_buffer.cc
     custom_buf_loopback_impl.cc
-    fake_hw_loopback_impl.cc
     ${CUDA_BLOCK_SOURCES}
 )
 
@@ -58,8 +61,9 @@ endif(NOT blnxngsched_sources)
 
 add_library(gnuradio-blnxngsched SHARED ${blnxngsched_sources})
 target_link_libraries(gnuradio-blnxngsched PUBLIC
-    gnuradio::gnuradio-runtime
+    gnuradio::gnuradio-runtime    
     ${CUDA_CUDART_LIBRARY}  
+    ${CUDA_BUFFER_LIBRARIES}
     )
     
 if (CUDA_FOUND)
@@ -72,6 +76,7 @@ target_include_directories(gnuradio-blnxngsched
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
     PUBLIC $<INSTALL_INTERFACE:include>
     ${CUDA_INCLUDE_DIRS} 
+    ${CUDA_BUFFER_INCLUDE_DIRS}
     )    
 
   
