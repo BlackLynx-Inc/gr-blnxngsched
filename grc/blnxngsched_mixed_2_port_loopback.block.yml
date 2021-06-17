@@ -1,10 +1,10 @@
-id: blnxngsched_cuda_loopback
-label: cuda_loopback
+id: blnxngsched_mixed_2_port_loopback
+label: mixed_2_port_loopback
 category: '[blnxngsched]'
 
 templates:
   imports: import blnxngsched
-  make: blnxngsched.cuda_loopback(${batch_size}, ${load})
+  make: blnxngsched.mixed_2_port_loopback(${batch_size}, ${load})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -32,12 +32,18 @@ parameters:
 #      * vlen (optional - data stream vector length. Default is 1)
 #      * optional (optional - set to 1 for optional inputs. Default is 0)
 inputs:
-- label: input
+- label: input_cuda
+  domain: stream
+  dtype: complex
+- label: input_host
   domain: stream
   dtype: complex
 
 outputs:
-- label: output
+- label: output_host
+  domain: stream
+  dtype: complex
+- label: output_host
   domain: stream
   dtype: complex
 

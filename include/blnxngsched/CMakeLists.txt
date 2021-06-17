@@ -11,5 +11,6 @@
 ########################################################################
 install(FILES
     api.h
-    cuda_loopback.h DESTINATION include/blnxngsched
+    cuda_loopback.h
+    mixed_2_port_loopback.h DESTINATION include/blnxngsched
 )

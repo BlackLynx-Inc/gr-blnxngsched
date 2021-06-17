@@ -20,7 +20,8 @@ set(CUDA_BLOCK_SOURCES )
 if (CUDA_FOUND)
 
     set(CUDA_BLOCK_SOURCES
-        cuda_loopback_impl.cc)
+        cuda_loopback_impl.cc
+        mixed_2_port_loopback_impl.cc)
 
     add_library(gnuradio-blnxngsched-cu STATIC 
         copy.cu
