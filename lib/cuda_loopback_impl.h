@@ -38,12 +38,7 @@ public:
                      gr_vector_int& ninput_items,
                      gr_vector_const_void_star& input_items,
                      gr_vector_void_star& output_items);
-                     
-    buffer_type get_buffer_type()
-    {        
-        return buftype_DEFAULT_CUDA::get();
-    }
-                     
+
 };
 
 } // namespace blnxngsched

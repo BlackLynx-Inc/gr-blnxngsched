@@ -27,9 +27,11 @@ custom_buf_loopback::sptr custom_buf_loopback::make(int batch_size)
 custom_buf_loopback_impl::custom_buf_loopback_impl(int batch_size)
     : gr::block("fake_hw_loopback",
                 gr::io_signature::make(
-                    1 /* min inputs */, 1 /* max inputs */, sizeof(input_type)),
+                    1 /* min inputs */, 1 /* max inputs */, sizeof(input_type), 
+                    custom_buffer::type),
                 gr::io_signature::make(
-                    1 /* min outputs */, 1 /*max outputs */, sizeof(output_type))),
+                    1 /* min outputs */, 1 /*max outputs */, sizeof(output_type), 
+                    custom_buffer::type)),
       d_batch_size(batch_size)
                 
 {

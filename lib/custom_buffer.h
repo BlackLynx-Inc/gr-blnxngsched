@@ -22,6 +22,8 @@ public:
     static void* device_memcpy(void* dest, const void* src, std::size_t count);
     static void* device_memmove(void* dest, const void* src, std::size_t count);
 
+    static buffer_type type;
+
     virtual ~custom_buffer();
 
     /*!

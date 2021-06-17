@@ -31,12 +31,7 @@ public:
                      gr_vector_int& ninput_items,
                      gr_vector_const_void_star& input_items,
                      gr_vector_void_star& output_items);
-                     
-    buffer_type get_buffer_type()
-    {
-        // This will cause the host_buffer subclass to be used for this class
-        return buftype_CUSTOM_HOST::get();
-    }
+
 };
 
 } // namespace blnxngsched

@@ -10,14 +10,13 @@
 #include <stdexcept>
 
 #include <gnuradio/block.h>
-//~ #include <gnuradio/thread/thread.h>
-//~ #include <blnxngsched/custom_buffer.h>
 #include "custom_buffer.h"
-
 
 namespace gr {
 namespace blnxngsched {
     
+buffer_type custom_buffer::type(buftype_CUSTOM_HOST{});
+
 void* custom_buffer::device_memcpy(void* dest, const void* src, std::size_t count)
 {
     // There is no spoon...er... device so fake it out using regular memcpy
@@ -42,17 +41,6 @@ custom_buffer::custom_buffer(int nitems,
     gr::configure_default_loggers(d_logger, d_debug_logger, "custom_buffer");
     if (!allocate_buffer(nitems, sizeof_item, downstream_lcm_nitems))
         throw std::bad_alloc();
-
-    //#ifdef BUFFER_DEBUG
-    //    // BUFFER DEBUG
-    //    {
-    //        std::ostringstream msg;
-    //        msg << "[" << this << "] "
-    //            << "custom_buffer constructor -- history: " << link->history()
-    //            << " -- nitems: " << nitems;
-    //        GR_LOG_DEBUG(d_logger, msg.str());
-    //    }
-    //#endif
 }
 
 custom_buffer::~custom_buffer() {}

@@ -36,9 +36,11 @@ cuda_loopback::sptr cuda_loopback::make(int batch_size, int load)
 cuda_loopback_impl::cuda_loopback_impl(int batch_size, int load)
     : gr::block("cuda_loopback",
                 gr::io_signature::make(
-                    1 /* min inputs */, 1 /* max inputs */, sizeof(input_type)),
+                    1 /* min inputs */, 1 /* max inputs */, sizeof(input_type), 
+                    cuda_buffer::type),
                 gr::io_signature::make(
-                    1 /* min outputs */, 1 /*max outputs */, sizeof(output_type))),
+                    1 /* min outputs */, 1 /*max outputs */, sizeof(output_type), 
+                    cuda_buffer::type)),
       d_batch_size(batch_size),
       d_load(load),
       d_min_grid_size(0),
