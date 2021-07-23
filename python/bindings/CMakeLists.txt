@@ -29,7 +29,9 @@ include(GrPybind)
 ########################################################################
 
 list(APPEND blnxngsched_python_files
+    cuda_fanout_python.cc
     cuda_loopback_python.cc 
+    cuda_mult_python.cc
     custom_buf_loopback_python.cc
     mixed_2_port_loopback_python.cc python_bindings.cc)
 

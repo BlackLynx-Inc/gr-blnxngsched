@@ -20,11 +20,14 @@ set(CUDA_BLOCK_SOURCES )
 if (CUDA_FOUND)
 
     set(CUDA_BLOCK_SOURCES
+        cuda_fanout_impl.cc
         cuda_loopback_impl.cc
+        cuda_mult_impl.cc
         mixed_2_port_loopback_impl.cc)
 
     add_library(gnuradio-blnxngsched-cu STATIC 
         copy.cu
+        mult.cu
         )
     set_target_properties(gnuradio-blnxngsched-cu PROPERTIES 
         POSITION_INDEPENDENT_CODE ON
