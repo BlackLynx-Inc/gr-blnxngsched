@@ -121,7 +121,7 @@ private:
 // see buffer_type.h for details on this macro
 // here we're using the macro to generate compile-time
 // class declarations
-MAKE_CUSTOM_BUFFER_TYPE(CUSTOM_HOST, &custom_buffer::make_custom_buffer)
+DEFINE_CUSTOM_BUFFER_TYPE(CUSTOM_HOST, &custom_buffer::make_custom_buffer)
     
 } // namespace blnxngsched
 } // namespace gr
