@@ -78,12 +78,12 @@ public:
      *
      * \return pointer to buffer base class
      */
-    static buffer_sptr make_custom_buffer(int nitems,
-                                          std::size_t sizeof_item,
-                                          uint64_t downstream_lcm_nitems,
-                                          uint32_t downstream_max_out_mult,
-                                          block_sptr link,
-                                          block_sptr buf_owner);
+    static buffer_sptr make_buffer(int nitems,
+                                   std::size_t sizeof_item,
+                                   uint64_t downstream_lcm_nitems,
+                                   uint32_t downstream_max_out_mult,
+                                   block_sptr link,
+                                   block_sptr buf_owner);
 
 private:
     // This is the simulated device buffer
@@ -118,11 +118,6 @@ private:
                   block_sptr buf_owner);
 };
 
-// see buffer_type.h for details on this macro
-// here we're using the macro to generate compile-time
-// class declarations
-DEFINE_CUSTOM_BUFFER_TYPE(CUSTOM_HOST, &custom_buffer::make_custom_buffer)
-    
 } // namespace blnxngsched
 } // namespace gr
 

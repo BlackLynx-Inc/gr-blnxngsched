@@ -15,7 +15,7 @@
 namespace gr {
 namespace blnxngsched {
     
-buffer_type custom_buffer::type(buftype_CUSTOM_HOST{});
+buffer_type custom_buffer::type(buftype<custom_buffer, custom_buffer>{});
 
 void* custom_buffer::device_memcpy(void* dest, const void* src, std::size_t count)
 {
@@ -232,12 +232,12 @@ bool custom_buffer::output_blocked_callback(int output_multiple, bool force)
     return rc;
 }
 
-buffer_sptr custom_buffer::make_custom_buffer(int nitems,
-                                              size_t sizeof_item,
-                                              uint64_t downstream_lcm_nitems,
-                                              uint32_t downstream_max_out_mult,
-                                              block_sptr link,
-                                              block_sptr buf_owner)
+buffer_sptr custom_buffer::make_buffer(int nitems,
+                                       size_t sizeof_item,
+                                       uint64_t downstream_lcm_nitems,
+                                       uint32_t downstream_max_out_mult,
+                                       block_sptr link,
+                                       block_sptr buf_owner)
 {
     return buffer_sptr(new custom_buffer(nitems, sizeof_item, downstream_lcm_nitems, 
                                          downstream_max_out_mult, link, buf_owner));
