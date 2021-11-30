@@ -7,6 +7,9 @@
 #
 
 install(FILES
+    cuda.domain.yml
+    blnxngsched_cuda_fanout.block.yml
+    blnxngsched_cuda_mult.block.yml
     blnxngsched_cuda_loopback.block.yml 
     blnxngsched_custom_buf_loopback.block.yml
     blnxngsched_mixed_2_port_loopback.block.yml DESTINATION share/gnuradio/grc/blocks
